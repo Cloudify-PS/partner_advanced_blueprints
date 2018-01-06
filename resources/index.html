@@ -1,0 +1,19 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Configuration of {{ ctx.instance.id }}</title>
+  <meta name="author" content="Cloudify">
+</head>
+
+<body>
+    <p>Parameters for {{ ctx.node.id }} </p>
+    <ul>
+    {% for parameter in ctx.instance.runtime_properties.params %}
+      <li>{{ parameter }} : {{ ctx.instance.runtime_properties.params[parameter] }}</li>
+    {% endfor %}
+    </ul>
+</body>
+
+</html>

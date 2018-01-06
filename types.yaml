@@ -1,0 +1,52 @@
+node_types:
+
+  webserver:
+    derived_from: cloudify.nodes.SoftwareComponent
+    properties:
+      params_list:
+        default: []
+      params:
+        default: {}
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create:
+          implementation: scripts/install_webserver.sh
+        start:
+          implementation: scripts/update_index.sh
+        update:
+          implementation: scripts/update_index.sh
+        is_alive: {}
+
+
+# do sth with /usr/share/nginx/html
+
+  openstack_host:
+    derived_from: cloudify.openstack.nodes.Server
+    properties:
+      agent_config:
+        default:
+          user: { get_input: agent_user }
+          install_method: remote
+          port: 22
+          key: { get_input: agent_key_private }
+      server:
+        default:
+          key_name: ''
+          image: { get_input: image }
+          flavor: { get_input: flavor }
+      image:
+        default: { get_input: image }
+      flavor:
+        default: { get_input: flavor }
+      management_network_name:
+        default: { get_input: network }
+    interfaces:
+      cloudify.interfaces.lifecycle:
+        create:
+          implementation: openstack.nova_plugin.server.create
+          inputs:
+            args:
+              default:
+                image: { get_input: image }
+                flavor: { get_input: flavor }
+                userdata: { get_attribute: [ cloudify_host_cloud_config, cloud_config ] }

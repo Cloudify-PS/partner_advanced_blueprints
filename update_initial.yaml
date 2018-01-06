@@ -1,0 +1,15 @@
+params:
+  TestA: True
+  TestB: "One"
+  TestC: "Two"
+  TestD: "Three"
+  TestE:
+    A: "a"
+    B: "b"
+    C: "c"
+
+merge_dict: False
+
+node_types_to_update: [ webserver ]
+
+configuration_node_id: config_holder
