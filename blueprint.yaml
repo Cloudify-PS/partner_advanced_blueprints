@@ -43,7 +43,7 @@ inputs:
 
   agent_user:
     type: string
-    default: { get_secret: agent_user }
+    default: ubuntu
 
   agent_key_public:
     type: string
