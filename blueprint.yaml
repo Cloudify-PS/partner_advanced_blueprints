@@ -39,7 +39,7 @@ inputs:
 
   external_network:
     type: string
-    default: { get_secret: external_network }
+    default: { get_secret: external_network_name }
 
   agent_user:
     type: string
